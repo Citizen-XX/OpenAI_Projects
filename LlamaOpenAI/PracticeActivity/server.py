@@ -24,7 +24,7 @@ storage_context = StorageContext.from_defaults(
     index_store=SimpleIndexStore.from_persist_dir(
         persist_dir="LlamaOpenAI/ml_index"),
 )
-#Alternatively we could just import the folder where all the index are stored
+#Alternatively we could just import the folder where all the index are stored like
 # storage_context = StorageContext.from_defaults(persist_dir="ml_index")
 # %%
 index = load_index_from_storage(storage_context)
