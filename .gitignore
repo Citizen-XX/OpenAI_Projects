@@ -1,0 +1,54 @@
+# Entorno virtual
+OpAI_SqlSrv_ENV/
+venv/
+env/
+.venv/
+ENV/
+
+# Archivo de variables de entorno
+.env
+
+# Archivos de Python
+__pycache__/
+*.py[cod]
+*.so
+
+# Archivos de log
+*.log
+
+# Archivos de sistema operativo
+.DS_Store
+Thumbs.db
+
+# Archivos de IDE y editores
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Archivos de dependencias
+node_modules/
+*.lock
+package-lock.json
+
+# Archivos de compilación
+*.com
+*.class
+*.dll
+*.exe
+*.o
+*.so
+
+# Archivos de distribución
+dist/
+build/
+*.egg-info/
+
+# Archivos de base de datos
+*.db
+*.sqlite3
+
+# Otros
+*.bak
+*.tmp
+*.temp
