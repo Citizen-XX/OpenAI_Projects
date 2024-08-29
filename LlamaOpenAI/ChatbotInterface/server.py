@@ -5,20 +5,17 @@ Created on Thu May 16 21:54:23 2024
 @author: Admin
 """
 from pydantic import BaseModel 
-
 from llama_index.core import VectorStoreIndex, SimpleDirectoryReader, StorageContext, load_index_from_storage
-
+from fastapi import FastAPI
 from dotenv import load_dotenv
+
+import uvicorn
 import os
 
-from pydantic import BaseModel
-import uvicorn
-from fastapi import FastAPI
+load_dotenv()
 
 class Item(BaseModel):
     question: str 
-
-load_dotenv()
 
 api_key = os.getenv("OPENAI_API_KEY")
 
@@ -27,10 +24,9 @@ if api_key:
 else:
     print("API key not found")
 
-storage_context = StorageContext.from_defaults(persist_dir = "ml_index")
+storage_context = StorageContext.from_defaults(persist_dir = "LlamaOpenAI/ml_index")
 
 index = load_index_from_storage(storage_context)
-
 engine = index.as_query_engine()
 
 app = FastAPI()
