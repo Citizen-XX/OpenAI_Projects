@@ -12,7 +12,7 @@ if api_key:
 else:
     print("API KEY not found.")
 
-documents = SimpleDirectoryReader("PDF").load_data()
+documents = SimpleDirectoryReader("LlamaOpenAI\PDF").load_data()
 # print(type(documents), len(documents))
 
 # %%
