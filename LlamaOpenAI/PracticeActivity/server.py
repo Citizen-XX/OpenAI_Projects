@@ -1,10 +1,11 @@
 # %%
 from fastapi import FastAPI
 from pydantic import BaseModel
-from llama_index.core import StorageContext, load_index_from_storage
+from llama_index.core import StorageContext, load_index_from_storage, Settings
 from llama_index.core.storage.docstore import SimpleDocumentStore
 from llama_index.core.storage.index_store import SimpleIndexStore
 from llama_index.core.vector_stores import SimpleVectorStore
+from llama_index.llms.openai import OpenAI
 
 import uvicorn
 
@@ -27,6 +28,9 @@ storage_context = StorageContext.from_defaults(
 #Alternatively we could just import the folder where all the index are stored like
 # storage_context = StorageContext.from_defaults(persist_dir="ml_index")
 # %%
+# llm = OpenAI(temperature=0, model="gpt-4o-mini")
+# Settings.llm = llm
+# Settings.chunk_size = 512
 index = load_index_from_storage(storage_context)
 engine = index.as_query_engine()
 
