@@ -1,44 +1,38 @@
-from dotenv import load_dotenv
-from llama_index.core import SimpleDirectoryReader, VectorStoreIndex, StorageContext
 import os
+from dotenv import load_dotenv
+from llama_index.core import SimpleDirectoryReader, VectorStoreIndex
 
+# Load environment variables from .env file
 load_dotenv()
 
+# Get OpenAI API key from environment variables
 api_key = os.getenv("OPENAI_API_KEY")
 
 if api_key:
-    print(f"API KEY: {api_key[:6]}")
+    print(f"API KEY: {api_key[:6]}...")
 else:
     print("API KEY not found.")
 
-# Ensure the output directory exists
-output_dir = r"LlamaOpenAI\V0_index"
+# Ensure the output directory for storing the index exists
+output_dir = r"LlamaOpenAI\LLM_indexes"
 os.makedirs(output_dir, exist_ok=True)
 
-document_paths = [
-    r"LlamaOpenAI\V0\Seguimiento SRMs Fondo de Innovacion.xlsx",
-    r"LlamaOpenAI\V0\Template Solutioning KOF - DCC & Observability.pptx",
-]
+# Directory where your documents are located
+docs_path = r"LlamaOpenAI\LLM_Docs"
+
+# Load all documents recursively from the main directory using SimpleDirectoryReader
+# SimpleDirectoryReader automatically handles loading files from subdirectories
 documents = []
+try:
+    doc = SimpleDirectoryReader(docs_path, recursive=True).load_data()
+    documents.extend(doc)
+except ValueError as e:
+    print(f"Error loading files from directory {docs_path}: {e}")
 
-for path in document_paths:
-    try:
-        doc = SimpleDirectoryReader(path).load_data()
-        documents.extend(doc)
-    except ValueError:
-        print(f"Error loading file: {path}")
-
-# Create the index from the multiple documents
+# Create an index from the loaded documents
 index = VectorStoreIndex.from_documents(documents)
 
-# Save the index to storage
-storage_context = StorageContext.from_defaults(persist_dir=output_dir)
-index.storage_context = storage_context
-index.storage_context.persist()
+# Persist the index to disk (single folder with all necessary index data)
+index.storage_context.persist(output_dir)
 
-# Load the index and create the query engine
-storage_context = StorageContext.from_defaults(persist_dir=output_dir)
-index = VectorStoreIndex.load_from_storage(storage_context)
-engine = index.as_query_engine()
-result = engine.query("Tell me about your Gel Nails")
-print(result)
+print(f"Index saved to {output_dir}")

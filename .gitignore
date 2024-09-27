@@ -56,3 +56,13 @@ build/
 
 .gitignore
 .requirements.txt
+
+*V0
+*V0_index
+LlamaOpenAI\V0_index
+LlamaOpenAI\V0
+
+LlamaOpenAI\LLM_Docs
+LlamaOpenAI\LLM_indexes
+*LLM_indexes
+*LLM_Docs
